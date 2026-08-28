@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vercel API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        input {
+            width: 70%;
+        }
+        button {
+            cursor: pointer;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Test Your Vercel API Backend</h2>
+    <p>Type a prompt below, open your browser's Developer Console (F12), and click submit.</p>
+
+    <input type="text" id="userPrompt" placeholder="Type something..." value="Hello from my test page!">
+    <br>
+    <button onclick="handleTest()">Send Request</button>
+
+    <h3>Response Preview:</h3>
+    <pre id="output">Waiting for input...</pre>
+
+    <script>
+        // Your testing function integrated here
+        async function getDataFromAI(userPrompt) {
+            try {
+                // REPLACE THIS URL with your actual Vercel project deployment URL
+                const vercelUrl = 'https://your-vercel-project-name.vercel.app/api/chat';
+
+                const response = await fetch(vercelUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: userPrompt })
+                });
+
+                const data = await response.json();
+                
+                // This will log the result to your browser's F12 console
+                console.log("API Response:", data);
+                
+                // This also displays it on the webpage for convenience
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('output').textContent = "Error: " + error.message;
+            }
+        }
+
+        // Bridge function to grab text from the input field
+        function handleTest() {
+            const promptText = document.getElementById('userPrompt').value;
+            document.getElementById('output').textContent = "Loading...";
+            getDataFromAI(promptText);
+        }
+    </script>
+
+</body>
+</html>
