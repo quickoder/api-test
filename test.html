@@ -43,11 +43,10 @@
     <pre id="output">Waiting for input...</pre>
 
     <script>
-        // Your testing function integrated here
         async function getDataFromAI(userPrompt) {
             try {
-                // REPLACE THIS URL with your actual Vercel project deployment URL
-                const vercelUrl = 'https://your-vercel-project-name.vercel.app/api/chat';
+                // Your exact Vercel endpoint URL including /api/chat
+                const vercelUrl = 'https://api-test-henna-tau.vercel.app/api/chat';
 
                 const response = await fetch(vercelUrl, {
                     method: 'POST',
@@ -59,10 +58,10 @@
 
                 const data = await response.json();
                 
-                // This will log the result to your browser's F12 console
+                // Logs result to browser's F12 console
                 console.log("API Response:", data);
                 
-                // This also displays it on the webpage for convenience
+                // Displays it on the webpage
                 document.getElementById('output').textContent = JSON.stringify(data, null, 2);
             } catch (error) {
                 console.error("Error:", error);
@@ -70,7 +69,6 @@
             }
         }
 
-        // Bridge function to grab text from the input field
         function handleTest() {
             const promptText = document.getElementById('userPrompt').value;
             document.getElementById('output').textContent = "Loading...";
